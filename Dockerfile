@@ -1,36 +1,42 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04 AS setup
+ARG UBUNTU_VERSION=22.04
+FROM ubuntu:${UBUNTU_VERSION} AS setup
 
-RUN apt-get update && apt-get install -y \
-  --no-install-recommends \
-  curl \
+SHELL ["/bin/bash", "-c"]
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
   build-essential \
+  curl \
+  wget \
   git \
-  && rm -rf /var/lib/apt/lists/*
+  unzip \
+  zip \
+  vim \
+  net-tools \
+  iputils-ping \
+  dnsutils \
+  software-properties-common \
+  ca-certificates \
+  sudo \
+  tree \
+  jq \
+  shellcheck \
+  zsh \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-################################################################################
-# Create a final stage for running your application.
-#
-# The following commands copy the output from the "build" stage above and tell
-# the container runtime to execute it when the image is run. Ideally this stage
-# contains the minimal runtime dependencies for the application as to produce
-# the smallest image possible. This often means using a different and smaller
-# image than the one used for building the application, but for illustrative
-# purposes the "base" image is used here.
-FROM setup AS final
+FROM setup AS app
 
-# Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
-ARG UID=10001
-RUN adduser \
-  --disabled-password \
-  --gecos "" \
-  --home "/nonexistent" \
-  --shell "/sbin/nologin" \
-  --no-create-home \
-  --uid "${UID}" \
-  appuser
-USER appuser
+RUN useradd -ms /bin/zsh devuser \
+  && usermod -aG sudo devuser \
+  && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-WORKDIR /workspace
+USER devuser
+WORKDIR /home/devuser
+
+RUN ZDOTDIR=/home/devuser sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+
+CMD ["/bin/zsh"]
