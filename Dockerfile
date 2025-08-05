@@ -3,6 +3,10 @@
 ARG UBUNTU_VERSION=22.04
 FROM ubuntu:${UBUNTU_VERSION} AS setup
 
+LABEL org.opencontainers.image.owner "jgfranco17"
+LABEL org.opencontainers.image.description "A developer sandbox environment with essential tools and utilities."
+LABEL org.opencontainers.image.source https://github.com/jgfranco17/developer-sandbox
+
 SHELL ["/bin/bash", "-c"]
 
 ENV DEBIAN_FRONTEND=noninteractive
