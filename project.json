@@ -1,6 +1,6 @@
 {
   "owner": "Chino Franco",
   "name": "developer-sandbox",
-  "description": "A sandbox Ubuntu environment for testing",
-  "version": "0.1.0"
+  "description": "A Linux sandbox environment for testing",
+  "version": "0.2.0"
 }
