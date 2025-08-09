@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 ARG UBUNTU_VERSION=22.04
-FROM ubuntu:${UBUNTU_VERSION} AS setup
+FROM ubuntu:${UBUNTU_VERSION} AS sandbox
 
 LABEL org.opencontainers.image.owner "jgfranco17"
 LABEL org.opencontainers.image.description "A developer sandbox environment with essential tools and utilities."
@@ -31,8 +31,6 @@ RUN apt-get update && \
         shellcheck \
         zsh \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-FROM setup AS app
 
 RUN useradd -ms /bin/zsh devuser \
   && usermod -aG sudo devuser \

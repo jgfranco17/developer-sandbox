@@ -9,4 +9,4 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./mount:/home/devuser:ro
+      - ./mount:/home/devuser/workspace:ro
