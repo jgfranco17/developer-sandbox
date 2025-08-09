@@ -7,12 +7,13 @@ on:
     paths:
       - "project.json"
 
-env:
-  UBUNTU_VERSION: "22.04"
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,17 +28,11 @@ jobs:
           username: ${{ secrets.CI_GITHUB_USER }}
           password: ${{ secrets.CI_GITHUB_TOKEN }}
 
-      - name: Set image name
+      - name: Get image details
         id: image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/developer-sandbox
-          echo "name=$IMAGE_NAME" >> $GITHUB_OUTPUT
-
-      - name: Get project details
-        id: details
-        run: |
           VERSION=$(jq -r '.version' project.json)
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/developer-sandbox
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/${{ matrix.os }}-sandbox
           echo "name=$IMAGE_NAME" >> $GITHUB_OUTPUT
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
@@ -47,8 +42,6 @@ jobs:
           file: Dockerfile
           context: .
           push: true
-          build-args: |
-            UBUNTU_VERSION=${{ env.UBUNTU_VERSION }}
           tags: |
             ${{ steps.image.outputs.name }}:latest
-            ${{ steps.image.outputs.name }}:${{ steps.details.outputs.version }}
+            ${{ steps.image.outputs.name }}:${{ steps.image.outputs.version }}

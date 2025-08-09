@@ -1,8 +1,8 @@
 ---
 services:
-  ubuntu-box:
-    container_name: ubuntu-box
-    image: ghcr.io/jgfranco17/ubuntu-box:latest
+  ubuntu-sandbox:
+    container_name: ubuntu-sandbox
+    image: ghcr.io/jgfranco17/ubuntu-sandbox:latest
     tty: true
     stdin_open: true
     build:

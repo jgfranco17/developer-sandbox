@@ -12,8 +12,8 @@ reset-mount:
 
 # Build the Docker image
 build:
-    docker compose -f docker-compose.yaml build --no-cache
+    docker compose -f docker-compose.yaml build
 
 # Start up the sandbox environment
 up:
-    docker compose run --rm ubuntu-box
+    docker compose run --rm ubuntu-sandbox
