@@ -1,8 +1,8 @@
 ---
 services:
-  developer-sandbox:
-    container_name: developer-sandbox
-    image: ghcr.io/jgfranco17/developer-sandbox:latest
+  ubuntu-box:
+    container_name: ubuntu-box
+    image: ghcr.io/jgfranco17/ubuntu-box:latest
     tty: true
     stdin_open: true
     build:
