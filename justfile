@@ -16,4 +16,4 @@ build:
 
 # Start up the sandbox environment
 up:
-    docker compose run --rm ubuntu-sandbox
+    docker compose up
