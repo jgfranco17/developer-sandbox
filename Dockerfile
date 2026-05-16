@@ -32,14 +32,17 @@ RUN apt-get update && \
   zsh \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/zsh devuser \
-  && usermod -aG sudo devuser \
-  && echo 'devuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+ARG USERNAME="devuser"
 
-USER devuser
-WORKDIR /home/devuser
+RUN useradd -ms /bin/zsh ${USERNAME} \
+  && usermod -aG sudo ${USERNAME} \
+  && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-ENV ZDOTDIR=/home/devuser
+USER ${USERNAME}
+ENV HOME="/home/${USERNAME}"
+WORKDIR "${HOME}"
+
+ENV ZDOTDIR="${HOME}"
 RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 
 FROM setup AS sandbox
