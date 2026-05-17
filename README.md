@@ -9,19 +9,23 @@ Supports quick setup with ZSH + [Oh My Zsh](https://ohmyz.sh/), along with some 
 
    ```bash
    git clone https://github.com/jgfranco17/developer-sandbox.git
-   cd docker-sandbox
+   cd developer-sandbox
    ```
 
 2. Build the Docker image.
 
    ```bash
-   docker compose -f docker-compose.yaml build --no-cache
+   # Manually
+   docker compose -f docker-compose.yaml build
+
+   # Or use Just
+   just build
    ```
 
 3. Start the sandbox environment.
 
    ```bash
-   docker compose -f docker-compose.yaml up
+   docker compose run --rm ubuntu-sandbox
    ```
 
 Running the above command will start the container and open a terminal session inside it.
