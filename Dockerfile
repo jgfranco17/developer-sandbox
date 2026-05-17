@@ -1,9 +1,9 @@
 ARG UBUNTU_VERSION=22.04
 FROM ubuntu:${UBUNTU_VERSION} AS base
 
-LABEL org.opencontainers.image.owner "jgfranco17"
-LABEL org.opencontainers.image.description "A developer sandbox environment with basic developers tools and utilities."
-LABEL org.opencontainers.image.source https://github.com/jgfranco17/developer-sandbox
+LABEL org.opencontainers.image.owner="jgfranco17"
+LABEL org.opencontainers.image.description="A developer sandbox environment with basic developers tools and utilities."
+LABEL org.opencontainers.image.source="https://github.com/jgfranco17/developer-sandbox"
 
 SHELL ["/bin/bash", "-c"]
 
