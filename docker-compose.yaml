@@ -10,17 +10,3 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./mount:/home/devuser/workspace:ro
-  nomad:
-    image: hashicorp/nomad:latest
-    container_name: nomad
-    privileged: true
-    command: agent -dev -bind=0.0.0.0 -log-level=DEBUG
-    ports:
-      - "4646:4646" # Nomad UI
-      - "4647:4647" # RPC
-      - "4648:4648" # Serf
-    volumes:
-      - ./nomad-data:/nomad/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - NOMAD_LOCAL_CONFIG={"bind_addr":"0.0.0.0","data_dir":"/nomad/data","enable_debug":true}
